@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>性格診断プログラム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #app {
+            margin: auto;
+            width: 50%;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 2px 2px 8px #aaa;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>性格診断プログラム</h2>
+        <div id="question1">
+            <p>1. アメリカとイギリスはどちらが好きですか？</p>
+            <button onclick="selectCountry('アメリカ')">アメリカ</button>
+            <button onclick="selectCountry('イギリス')">イギリス</button>
+        </div>
+        <div id="question2" style="display:none;">
+            <p id="question2Text"></p>
+            <button onclick="selectOption('はい')">はい</button>
+            <button onclick="selectOption('いいえ')">いいえ</button>
+        </div>
+        <div id="result" style="display:none;">
+            <h3>あなたの性格診断結果:</h3>
+            <p id="personality"></p>
+        </div>
+    </div>
+
+    <script>
+        function selectCountry(country) {
+            let question2Text = "";
+            if (country === "イギリス") {
+                question2Text = "壮大で劇的な音楽スタイルに興味がありますか？";
+            } else if (country === "アメリカ") {
+                question2Text = "トレンドを追いかけることやスタイルの変化に興味がありますか？";
+            }
+
+            document.getElementById("question1").style.display = "none";
+            document.getElementById("question2").style.display = "block";
+            document.getElementById("question2Text").innerText = "2. " + question2Text;
+
+            window.selectOption = function(option) {
+                const personality = diagnosePersonality(country, option);
+                document.getElementById("question2").style.display = "none";
+                document.getElementById("result").style.display = "block";
+                document.getElementById("personality").innerText = personality;
+            };
+        }
+
+        function diagnosePersonality(answer1, answer2) {
+            if (answer1 === "イギリス" && answer2 === "はい") return "クイーン";
+            if (answer1 === "イギリス" && answer2 === "いいえ") return "ビートルズ";
+            if (answer1 === "アメリカ" && answer2 === "はい") return "マドンナ";
+            if (answer1 === "アメリカ" && answer2 === "いいえ") return "レッドホットチリペッパー";
+        }
+    </script>
+</body>
+</html>
